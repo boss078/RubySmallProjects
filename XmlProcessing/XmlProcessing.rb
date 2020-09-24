@@ -29,6 +29,10 @@ class Continent
         puts "List of countries"
         @countries.each { |e| puts e}
     end
+    def print_in_alphabet_order
+        alphabet_countries = @countries.sort { |a, b| a.name <=> b.name }
+        alphabet_countries.each {|e| puts e }
+    end
 end
 class World
     attr_reader :continents
@@ -65,9 +69,17 @@ class World
         all_countries.sort! { |a, b| -a.inflation <=> -b.inflation }
         all_countries[(0..4)]
     end
+    def print_in_alphabet_order
+        alphabet_continents = @continents.sort { |a, b| a.name <=> b.name }
+        alphabet_continents.each do |e|
+            puts "Continent #{e.name}"
+            e.print_in_alphabet_order
+        end
+    end
 end
 
 
 world = World.new("cia-1996.xml")
 puts world.find_country_with_biggest_population
 world.find_top_five_countries_with_biggest_inflation.each { |country| puts country }
+world.print_in_alphabet_order
